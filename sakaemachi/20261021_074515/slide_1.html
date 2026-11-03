@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap">
+<style>
+  @page { margin: 0; }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    width: 1080px; height: 1350px;
+    font-family: "Zen Kaku Gothic New", sans-serif;
+    overflow: hidden;
+  }
+
+  .canvas {
+    position: relative;
+    width: 1080px; height: 1350px;
+    background: #fdf6e8;
+  }
+
+  .bg {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+  }
+
+  .logo {
+    position: absolute;
+    top: 40px; left: 50%;
+    transform: translateX(-50%);
+    width: 380px;
+    filter: drop-shadow(0 6px 10px rgba(60, 40, 20, 0.25));
+  }
+
+  .card {
+    position: absolute;
+    left: 48px; right: 48px;
+    top: 400px; bottom: 150px;
+    background: #fffaf0;
+    border: 4px dashed #e8b23d;
+    border-radius: 48px;
+    box-shadow: 0 14px 30px rgba(90, 60, 20, 0.22);
+    padding: 56px 56px 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    overflow: hidden;
+  }
+
+  .eyebrow {
+    font-family: "Zen Maru Gothic", sans-serif;
+    font-weight: 700;
+    font-size: 64px;
+    color: #4a7c4a;
+    letter-spacing: 0.08em;
+  }
+
+  /* ---- slide 1: cover ---- */
+  .headline {
+    font-family: "Zen Maru Gothic", sans-serif;
+    font-weight: 900;
+    font-size: 108px;
+    line-height: 1.12;
+    color: #d9500f;
+    -webkit-text-stroke: 8px #fffaf0;
+    paint-order: stroke fill;
+    text-shadow: 0 5px 0 rgba(90,60,20,0.12);
+    margin: 0;
+    text-align: center;
+  }
+  .subtext {
+    font-family: "Zen Maru Gothic", sans-serif;
+    font-weight: 700;
+    font-size: 38px;
+    color: #4a3320;
+    text-align: center;
+    margin: 0;
+  }
+  .underline {
+    width: 300px; height: 8px;
+    background: #f4cf6e;
+    border-radius: 999px;
+  }
+  .entry-badge {
+    align-self: stretch;
+    background: #fff;
+    border: 4px solid #4a7c4a;
+    border-radius: 28px;
+    padding: 26px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .entry-badge .tag {
+    background: #4a7c4a;
+    color: #fff;
+    font-weight: 700;
+    font-size: 26px;
+    padding: 10px 20px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .entry-badge .date {
+    font-family: "Zen Maru Gothic", sans-serif;
+    font-weight: 900;
+    font-size: 58px;
+    color: #d9500f;
+    line-height: 1;
+  }
+  .entry-badge .date small {
+    font-size: 32px;
+    color: #4a3320;
+    font-weight: 700;
+    margin-left: 8px;
+  }
+  .entry-badge .time {
+    font-weight: 700;
+    font-size: 30px;
+    color: #4a3320;
+  }
+
+  /* ---- solo-info slides: schedule / venue ---- */
+  .solo-value {
+    font-family: "Zen Maru Gothic", sans-serif;
+    font-weight: 900;
+    font-size: 64px;
+    color: #2f2115;
+    text-align: center;
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  /* ---- free-form topic slides: point / cta lead-in text ---- */
+  .point-text {
+    font-family: "Zen Kaku Gothic New", sans-serif;
+    font-weight: 700;
+    font-size: 44px;
+    color: #2f2115;
+    text-align: center;
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  /* ---- genres slide ---- */
+  .genre-row-big {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px 24px;
+    justify-content: center;
+  }
+  .genre-chip-big {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    background: #fbeed4;
+    border-radius: 999px;
+    padding: 16px 40px 16px 16px;
+  }
+  .genre-chip-big img { width: 56px; height: 56px; display: block; }
+  .genre-chip-big span {
+    font-family: "Zen Kaku Gothic New", sans-serif;
+    font-weight: 700;
+    font-size: 44px;
+    color: #4a3320;
+    white-space: nowrap;
+  }
+
+  /* ---- price slide ---- */
+  .price-pill-big {
+    background: #fff;
+    border: 6px dashed #d9500f;
+    border-radius: 999px;
+    padding: 40px 64px;
+    font-weight: 900;
+    font-size: 56px;
+    color: #2f2115;
+    font-family: "Zen Maru Gothic", sans-serif;
+    text-align: center;
+  }
+  .price-pill-big .amount-big { color: #d9500f; font-size: 88px; }
+
+  /* ---- entry + cta slide ---- */
+  .entry-big {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  .entry-big .tag-big {
+    background: #4a7c4a;
+    color: #fff;
+    font-weight: 700;
+    font-size: 30px;
+    padding: 12px 28px;
+    border-radius: 999px;
+  }
+  .entry-big .date-big {
+    font-family: "Zen Maru Gothic", sans-serif;
+    font-weight: 900;
+    font-size: 80px;
+    color: #d9500f;
+    line-height: 1;
+  }
+  .entry-big .date-big small {
+    font-size: 36px;
+    color: #4a3320;
+    font-weight: 700;
+    margin-left: 10px;
+  }
+  .entry-big .time-big {
+    font-weight: 700;
+    font-size: 36px;
+    color: #4a3320;
+  }
+
+  .cta {
+    align-self: stretch;
+    background: linear-gradient(180deg, #ef6a1f, #d9500f);
+    color: #fff;
+    font-family: "Zen Maru Gothic", sans-serif;
+    font-weight: 900;
+    font-size: 38px;
+    padding: 30px 20px;
+    border-radius: 999px;
+    box-shadow: 0 8px 0 #a63c08;
+    text-align: center;
+  }
+  .tagline {
+    font-family: "Zen Maru Gothic", sans-serif;
+    font-weight: 700;
+    font-size: 26px;
+    color: #8a5a2b;
+    text-align: center;
+    line-height: 1.5;
+  }
+
+  .page-dot {
+    position: absolute;
+    top: 44px; right: 44px;
+    display: flex;
+    gap: 10px;
+  }
+  .page-dot span {
+    width: 16px; height: 16px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.55);
+    border: 2px solid #fff;
+  }
+  .page-dot span.active { background: #d9500f; }
+</style>
+</head>
+<body>
+  <div class="canvas">
+    <img class="bg" src="file:///Users/shinozakitomohisa/mojiko-post/assets/frame_bg.png" alt="">
+    <img class="logo" src="file:///Users/shinozakitomohisa/mojiko-post/assets/logo.png" alt="">
+    <div class="page-dot"><span class="active"></span>
+<span class=""></span>
+<span class=""></span>
+<span class=""></span></div>
+
+    <div class="card">
+      <p class="headline">雨でも出れる</p><p class="subtext">栄町マルシェ、出店者募集中。</p><div class="underline"></div>
+    </div>
+
+  </div>
+</body>
+</html>
